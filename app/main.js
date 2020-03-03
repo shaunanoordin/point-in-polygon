@@ -86,27 +86,14 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/importExample.js":
-/*!******************************!*\
-  !*** ./src/importExample.js ***!
-  \******************************/
-/*! exports provided: ImportExample */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ImportExample\", function() { return ImportExample; });\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n/*  Example Class\r\n    Demonstrates ES6 import function in main.js\r\n */\n//==============================================================================\nvar ImportExample =\n/*#__PURE__*/\nfunction () {\n  function ImportExample() {\n    var txt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : \"DEFAULT TEXT\";\n\n    _classCallCheck(this, ImportExample);\n\n    this.txt = txt;\n  }\n\n  _createClass(ImportExample, [{\n    key: \"getText\",\n    value: function getText() {\n      return \"An ImportExample class was imported; it has the text: \" + this.txt;\n    }\n  }]);\n\n  return ImportExample;\n}(); //==============================================================================\n\n//# sourceURL=webpack:///./src/importExample.js?");
-
-/***/ }),
-
 /***/ "./src/main.js":
 /*!*********************!*\
   !*** ./src/main.js ***!
   \*********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _importExample_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./importExample.js */ \"./src/importExample.js\");\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n/*  \r\nStarter JS\r\n----------\r\n\r\nStarter template for JavaScript web app projects.\r\n\r\n(Shaun A. Noordin | shaunanoordin.com | 20180413)\r\n */\n\n/*  Primary App Class\r\n */\n//==============================================================================\n\nvar App = function App() {\n  _classCallCheck(this, App);\n\n  var importExample = new _importExample_js__WEBPACK_IMPORTED_MODULE_0__[\"ImportExample\"](\"HI THERE\");\n  this.console = document.getElementById(\"console\");\n  this.console.innerHTML = \"This is a starter template for JS projects. <br>\" + importExample.getText();\n}; //==============================================================================\n\n/*  Initialisations\r\n */\n//==============================================================================\n\n\nvar app;\n\nwindow.onload = function () {\n  window.app = new App();\n}; //==============================================================================\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n/*  \r\nHit Test\r\n--------\r\n\r\n(Shaun A. Noordin | shaunanoordin.com | 20200303)\r\n */\nvar POINT_RADIUS = 8;\nvar POINT_STROKE_WIDTH = 32;\nvar POLYGON_STROKE_WIDTH = 4;\nvar SVG_NAMESPACE = 'http://www.w3.org/2000/svg';\n\nvar App =\n/*#__PURE__*/\nfunction () {\n  function App() {\n    _classCallCheck(this, App);\n\n    this.svg = document.getElementById('svg');\n    this.dataLayer = document.getElementById('data-layer');\n    this.polygon = {\n      points: [200, 300, 400, 0, 600, 150, 800, 0, 1000, 300, 600, 600]\n    };\n    this.point = {\n      x: 400,\n      y: 200\n    };\n    this.update();\n  }\n\n  _createClass(App, [{\n    key: \"update\",\n    value: function update() {\n      while (this.dataLayer.firstChild) {\n        this.dataLayer.removeChild(this.dataLayer.firstChild);\n      }\n\n      var polygon = document.createElementNS(SVG_NAMESPACE, 'polygon');\n      polygon.setAttribute('points', this.polygon.points.join(' '));\n      polygon.setAttribute('stroke-width', POLYGON_STROKE_WIDTH);\n      polygon.setAttribute('stroke', '#0cc');\n      polygon.setAttribute('fill', 'none');\n      this.dataLayer.appendChild(polygon);\n      var point = document.createElementNS(SVG_NAMESPACE, 'circle');\n      point.setAttribute('cx', this.point.x);\n      point.setAttribute('cy', this.point.y);\n      point.setAttribute('r', POINT_RADIUS);\n      point.setAttribute('stroke-width', POINT_STROKE_WIDTH);\n      point.setAttribute('stroke', 'rgba(192, 192, 192, 0.5)');\n      point.setAttribute('fill', 'rgba(0, 255, 0)');\n      this.dataLayer.appendChild(point);\n    }\n  }]);\n\n  return App;\n}();\n\nvar app;\n\nwindow.onload = function () {\n  window.app = new App();\n};\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ })
 
