@@ -58,7 +58,7 @@ class App {
     point.setAttribute('stroke-width', POINT_STROKE_WIDTH);
     point.setAttribute('stroke', 'rgba(192, 192, 192, 0.5)');
     
-    if (!pointInPolygon) {
+    if (pointInPolygon) {
       point.setAttribute('fill', '#0e0');
     } else {
       point.setAttribute('fill', '#e00');
@@ -71,32 +71,42 @@ class App {
         || !polygon || !polygon.points
         || polygon.points.length < 6 || polygon.points.length % 2 !== 0) return false;
     
-    let x2 = polygon.points[polygon.points.length - 2];
+    /*let x2 = polygon.points[polygon.points.length - 2];
     let y2 = polygon.points[polygon.points.length - 1];
     let prevAngle = Math.atan2(SVG_REVERSED_Y_AXIS * (y2 - point.y), x2 - point.x);  // Initial angle
-    console.log('INITIAL ANGLE: ', prevAngle * 180 / Math.PI)
+    console.log('INITIAL ANGLE: ', prevAngle * 180 / Math.PI)*/
     let rotation = 0;  // Total rotation
     
+    function getMagnitude(x, y) { return Math.sqrt(x * x + y * y); }
+    
     for (let i = 0; (i + 1) < polygon.points.length; i += 2) {
-      x2 = polygon.points[i];
-      y2 = polygon.points[i + 1];
-      const currentAngle = Math.atan2(SVG_REVERSED_Y_AXIS * (y2 - point.y), x2 - point.x)
-
-      // rotation += ???
       
-      console.log('TODO: CALCULATE ROTATION')
+      // Use dot product to calculate angle between two lines
+      const aX = polygon.points[i + 0] - this.point.x;
+      const aY = polygon.points[i + 1] - this.point.y;
+      const bX = polygon.points[(i + 2) % polygon.points.length] - this.point.x;
+      const bY = polygon.points[(i + 3) % polygon.points.length] - this.point.y;
       
-      const debugLine = document.createElementNS(SVG_NAMESPACE, 'line');
+      const divisor = getMagnitude(aX, aY) * getMagnitude(bX, bY);
+      const angleDiff = (divisor)
+        ? Math.acos( (aX * bX + aY * bY) / divisor)
+        : 0;
+      
+      rotation += angleDiff;
+      
+      let debugLine = document.createElementNS(SVG_NAMESPACE, 'line');
       debugLine.setAttribute('x1', this.point.x);
       debugLine.setAttribute('y1', this.point.y);
-      debugLine.setAttribute('x2', x2);
-      debugLine.setAttribute('y2', y2);
+      debugLine.setAttribute('x2', polygon.points[i + 0]);
+      debugLine.setAttribute('y2', polygon.points[i + 1]);
       debugLine.setAttribute('stroke-width', 2);
       debugLine.setAttribute('stroke', 'rgba(128, 128, 128, 0.5)');
       this.dataLayer.appendChild(debugLine);
     }
     
-    return false;
+    // If rotation === 0, false. If rotation === 360 degrees or -360 degrees, true.
+    // Build in minor tolerances for rounding errors.
+    return rotation < -0.1 || rotation > 0.1 ;
     
   }
 }
