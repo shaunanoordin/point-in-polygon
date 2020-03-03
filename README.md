@@ -1,4 +1,6 @@
-# Hit Test
+# Point In Polygon Tester
+
+Is a point in a polygon? This app implements the [even-odd rule](https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule) to check.
 
 Created by [Shaun A. Noordin](https://shaunanoordin.com).
 

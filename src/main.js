@@ -1,6 +1,6 @@
 /*  
-Hit Test
---------
+Point In Polygon
+----------------
 
 (Shaun A. Noordin | shaunanoordin.com | 20200303)
  */

@@ -1,11 +1,11 @@
 {
-  "name": "hit-test",
-  "version": "0.0.1",
+  "name": "point-in-polygon",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shaunanoordin/hit-test/"
+    "url": "https://github.com/shaunanoordin/point-in-polygon/"
   },
-  "homepage": "https://github.com/shaunanoordin/hit-test/",
+  "homepage": "https://github.com/shaunanoordin/point-in-polygon/",
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
