@@ -25,10 +25,24 @@ class App {
       y: 300,
     };
     
-    this.update();
+    this.svg.addEventListener('click', this.onClick.bind(this))
+    
+    this.render();    
   }
   
-  update () {
+  onClick (e) {
+    const svgBounds = this.svg.getBoundingClientRect();
+    const newX = (e.clientX - svgBounds.x) / (svgBounds.width / 1200);
+    const newY = (e.clientY - svgBounds.y) / (svgBounds.height / 600);
+    
+    this.point.x = (!isNaN(newX)) ? newX : this.point.x
+    this.point.y = (!isNaN(newY)) ? newY : this.point.y
+    
+    this.render();
+    
+  }
+  
+  render () {
     while (this.dataLayer.firstChild) { 
       this.dataLayer.removeChild(this.dataLayer.firstChild);
     }
@@ -57,6 +71,8 @@ class App {
     point.setAttribute('r', POINT_RADIUS);
     point.setAttribute('stroke-width', POINT_STROKE_WIDTH);
     point.setAttribute('stroke', 'rgba(192, 192, 192, 0.5)');
+    
+    console.log(pointInPolygon);
     
     if (pointInPolygon) {
       point.setAttribute('fill', '#0e0');
@@ -106,6 +122,7 @@ class App {
     
     // If rotation === 0, false. If rotation === 360 degrees or -360 degrees, true.
     // Build in minor tolerances for rounding errors.
+    console.log(rotation * 180 / Math.PI);
     return rotation < -0.1 || rotation > 0.1 ;
     
   }
