@@ -72,8 +72,6 @@ class App {
     point.setAttribute('stroke-width', POINT_STROKE_WIDTH);
     point.setAttribute('stroke', 'rgba(192, 192, 192, 0.5)');
     
-    console.log(pointInPolygon);
-    
     if (pointInPolygon) {
       point.setAttribute('fill', '#0e0');
     } else {
@@ -87,28 +85,25 @@ class App {
         || !polygon || !polygon.points
         || polygon.points.length < 6 || polygon.points.length % 2 !== 0) return false;
     
-    /*let x2 = polygon.points[polygon.points.length - 2];
-    let y2 = polygon.points[polygon.points.length - 1];
-    let prevAngle = Math.atan2(SVG_REVERSED_Y_AXIS * (y2 - point.y), x2 - point.x);  // Initial angle
-    console.log('INITIAL ANGLE: ', prevAngle * 180 / Math.PI)*/
-    let rotation = 0;  // Total rotation
-    
-    function getMagnitude(x, y) { return Math.sqrt(x * x + y * y); }
+    // Use even-odd rule to determine if - given a horizontal line that extends
+    // from point x,y - the line intersects with any section of the polygon. Odd
+    // number of intersections means point is in polygon.
+    let pointIsInPolygon = false;
     
     for (let i = 0; (i + 1) < polygon.points.length; i += 2) {
+      const aX = polygon.points[i + 0];
+      const aY = polygon.points[i + 1];
+      const bX = polygon.points[(i + 2) % polygon.points.length];
+      const bY = polygon.points[(i + 3) % polygon.points.length];
       
-      // Use dot product to calculate angle between two lines
-      const aX = polygon.points[i + 0] - this.point.x;
-      const aY = polygon.points[i + 1] - this.point.y;
-      const bX = polygon.points[(i + 2) % polygon.points.length] - this.point.x;
-      const bY = polygon.points[(i + 3) % polygon.points.length] - this.point.y;
-      
-      const divisor = getMagnitude(aX, aY) * getMagnitude(bX, bY);
-      const angleDiff = (divisor)
-        ? Math.acos( (aX * bX + aY * bY) / divisor)
-        : 0;
-      
-      rotation += angleDiff;
+      if (
+        ((aY > point.y) !== (bY > point.y))
+        && (
+          point.x < (aX + (bX - aX) * (point.y - aY) / (bY - aY))
+        )
+      ) {
+        pointIsInPolygon = !pointIsInPolygon;
+      }
       
       let debugLine = document.createElementNS(SVG_NAMESPACE, 'line');
       debugLine.setAttribute('x1', this.point.x);
@@ -120,11 +115,7 @@ class App {
       this.dataLayer.appendChild(debugLine);
     }
     
-    // If rotation === 0, false. If rotation === 360 degrees or -360 degrees, true.
-    // Build in minor tolerances for rounding errors.
-    console.log(rotation * 180 / Math.PI);
-    return rotation < -0.1 || rotation > 0.1 ;
-    
+    return pointIsInPolygon;
   }
 }
 
